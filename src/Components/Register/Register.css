@@ -1,0 +1,76 @@
+/* Importação de fontes */
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+/* Resetando margens e preenchimentos */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos específicos para telas com largura máxima de 400px */
+@media screen and (max-width: 640px) {
+    body {
+        background-color: #7F6EF2;
+        font-family: 'Mulish', sans-serif; /* Aplica a fonte ao corpo da página */
+    }
+
+    figure {
+        margin: 0 auto;
+        margin-top: 233px;
+        display: flex;
+        justify-content: center;
+        margin-right: 1em;
+    }
+
+    .info input {
+        border-radius: 11px;
+        background-color: white;
+        font-family: 'Mulish', sans-serif;
+        color: #868686;
+        width: 322px;
+        height: 46px;
+        padding-left: 1em;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        border: none;
+        font-weight: 700;
+    }
+
+    #log-links {
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        color: white;
+        font-family: 'Mulish', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        width: 322px;
+    }
+
+    a {
+        color: white;
+        text-decoration: none; /* Remove sublinhado dos links */
+    }
+
+    #enviar {
+        border: none;
+        font-weight: 700;
+        border-radius: 11px;
+        background-color: #ff9500;
+        font-family: 'Mulish', sans-serif;
+        color: white;
+        width: 322px;
+        height: 39px;
+        text-align: center;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        font-size: 17px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2); /* Ajustado para rgba para melhor controle de opacidade */
+    }
+
+    .info {
+        margin: 0;
+    }
+}
