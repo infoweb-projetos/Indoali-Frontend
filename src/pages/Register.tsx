@@ -10,6 +10,7 @@ const Register: React.FC = () => {
   const [senha, setSenha] = useState('');
   const [userName, setUserName] = useState('');
   const [name, setName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,9 +30,18 @@ const Register: React.FC = () => {
         name,
       });
       navigate('/login');
-    } catch (error) {
-      console.error('Error registering', error);
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        //console.log(error.response)
+        setErrorMessage(error.response.data.message); 
+      } else {
+        setErrorMessage('Erro ao registrar. Talvez o nome de usuário ou de email já exista');
+      }
     }
+  };
+
+  const handleInputChange = () => {
+    setErrorMessage(''); 
   };
 
   return (
@@ -43,7 +53,7 @@ const Register: React.FC = () => {
         <form onSubmit={handleRegister}>
           <div className="info" style={{ marginBottom: '20px' }}>
             <label htmlFor="nome"></label>
-            <input type="text" id="nome" placeholder="nome" required 
+            <input type="text" id="nome" placeholder="nome" 
             value={name} 
             onChange={(e) => setName(e.target.value)}
             />
@@ -52,15 +62,19 @@ const Register: React.FC = () => {
             <label htmlFor="username"></label>
             <input type="text" id="username" placeholder="@username" required 
             value={userName} 
-            onChange={(e) => setUserName(e.target.value)}
-            />
+            onChange={(e) => {
+              setUserName(e.target.value); 
+              handleInputChange();
+            }}/>
           </div>
           <div className="info" style={{ marginBottom: '20px' }}>
             <label htmlFor="email"></label>
             <input type="email" id="email" placeholder="email" required 
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            />
+            onChange={(e) => {
+              setEmail(e.target.value); 
+              handleInputChange();
+            }}/>
           </div>
           <div className="info" style={{ marginBottom: '20px' }}>
             <label htmlFor="senha"></label>
@@ -69,7 +83,12 @@ const Register: React.FC = () => {
             onChange={(e) => setSenha(e.target.value)}
             />
           </div>
-          <div id="input-enviar" style={{ marginBottom: '20px' }}>
+          {errorMessage && (
+          <p className="text-white text-xs text-center">
+            {errorMessage}
+          </p>
+          )}
+          <div id="input-enviar" style={{ marginBottom: '20px', marginTop: '20px' }}>
             <input id="enviar" type="submit" value="Entrar" />
           </div>
           <div id="log-links">

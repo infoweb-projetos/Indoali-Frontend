@@ -19,7 +19,7 @@ const UserProfile: React.FC = () => {
         const response = await axios.get('http://localhost:3000/usuarios/'+id, {
           headers: {
             Authorization: `Bearer ${token}`,
-          },
+          }
         });
 
         //console.log(response.data)
@@ -27,8 +27,17 @@ const UserProfile: React.FC = () => {
         setUserData(response.data);
 
         //console.log(userData)
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
+      } catch (error: any) { 
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+          console.error('Token inválido ou expirado. Redirecionando para login...');
+
+          localStorage.removeItem('token');
+          localStorage.removeItem('userId');
+          
+          navigate('/login');
+        } else {
+          console.error('Erro ao buscar perfil do usuário:', error);
+        }
       }
     };
 
