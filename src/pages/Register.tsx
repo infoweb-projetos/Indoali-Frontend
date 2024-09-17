@@ -11,6 +11,7 @@ const Register: React.FC = () => {
   const [userName, setUserName] = useState('');
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,20 @@ const Register: React.FC = () => {
         userName,
         name,
       });
+      
+      const response = await axios.post('http://localhost:3000/auth/login', {
+        email,
+        senha,
+      });
+      
+      const { accessToken, userId } = response.data;
+      setToken(accessToken);
+      localStorage.setItem('token', accessToken);
+      localStorage.setItem('userId', userId); 
+      console.log(accessToken)
+      console.log(userId)
+      console.log(localStorage)
+
       navigate('/login');
     } catch (error: any) {
       if (error.response && error.response.data.message) {
@@ -39,6 +54,10 @@ const Register: React.FC = () => {
       }
     }
   };
+
+  if (token){
+    navigate('/');
+  }
 
   const handleInputChange = () => {
     setErrorMessage(''); 

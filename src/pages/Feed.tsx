@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 const IrAoPerfil = () => {
     const token = localStorage.getItem('token');
     if (!token) {
-        return (<a className="bg-white" href="/login" >Login</a>);
+        return (<a className="bg-white" href="/login" >Login</a>); 
     } else {
         return (<a className="bg-white" href="/profile" >Seu perfil</a>);
     }

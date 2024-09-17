@@ -28,7 +28,7 @@ const Login: React.FC = () => {
       const { accessToken, userId } = response.data;
       setToken(accessToken);
       localStorage.setItem('token', accessToken);
-      localStorage.setItem('userId', userId);
+      localStorage.setItem('userId', userId); 
       console.log(accessToken)
       console.log(userId)
       console.log(localStorage)

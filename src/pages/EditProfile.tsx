@@ -28,11 +28,11 @@ const EditProfile: React.FC = () => {
           }
         });
 
-        setUserData(response.data);
+        setEmail(response.data.dados.email);
+        setName(response.data.dados.name);
+        setUserName(response.data.dados.userName);
 
-        setEmail(response.data.email);
-        setName(response.data.name);
-        setUserName(response.data.username);
+        setUserData(response.data);
 
       } catch (error: any) { 
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
@@ -124,13 +124,13 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
         <form onSubmit={handleUpdateProfile}>
             <div className="info" style={{ marginBottom: '20px' }}>
                 <label className="text-white" htmlFor="nome"><b>Nome:</b></label>
-                <input type="text" id="nome" onChange={(e) => setName(e.target.value)} value={name} placeholder={userData.dados.name}/>
+                <input type="text" id="nome" onChange={(e) => setName(e.target.value)} value={name} placeholder="nome"/>
             </div>
             <div className="info" style={{ marginBottom: '20px' }}>
                 <label className="text-white" htmlFor="username"><b>Username:</b></label>
                 <input type="text" id="username" required      
                     value={userName} 
-                    placeholder={userData.dados.userName}
+                    placeholder="nome de usuário"
                     onChange={(e) => {
                         setUserName(e.target.value); 
                         handleInputChange();
@@ -140,7 +140,7 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
                 <label className="text-white" htmlFor="email"><b>Email:</b></label>
                 <input type="text" id="username" required
                     value={email}
-                    placeholder={userData.dados.email}
+                    placeholder="email"
                     onChange={(e) => {
                         setEmail(e.target.value); 
                         handleInputChange();

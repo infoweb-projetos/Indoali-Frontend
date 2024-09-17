@@ -44,11 +44,22 @@ const UserProfile: React.FC = () => {
     fetchUserProfile();
   }, []);
 
+  const login = async () => {
+    try {
+        localStorage.clear();
+        navigate('/login');
+    } catch (error) {
+        console.error('Erro em ir para login', error);
+    }
+  }
+
+
   if (!userData) {
+    //localStorage.clear();
     return <main className="indoali">
       <div className="h-screen flex flex-col items-center justify-center">
         <h1 className="bg-white text-lg font-semibold m-[5px]">Usuário não cadastrado</h1>
-        <a className="bg-white" href="/login" >fazer login</a>
+        <a className="bg-white" onClick={login} >fazer login</a>
       </div>
     </main>;
   }
