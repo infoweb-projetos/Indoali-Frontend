@@ -108,7 +108,7 @@ const Register: React.FC = () => {
           </p>
           )}
           <div id="input-enviar" style={{ marginBottom: '20px', marginTop: '20px' }}>
-            <input id="enviar" type="submit" value="Entrar" />
+            <input id="enviar" type="submit" value="Confirmar" />
           </div>
           <div id="log-links">
             <p>Já possui uma conta? <a href="/login">Faça login</a></p>

@@ -57,7 +57,7 @@ const Login: React.FC = () => {
       <form onSubmit={handleLogin}>
         <div className="info" style={{ marginBottom: '30px' }}>
           <label htmlFor="email"></label>
-          <input type="email" id="email" placeholder="E-mail ou username" required 
+          <input type="email" id="email" placeholder="E-mail" required 
           value={email} onChange={(e) => {
             setEmail(e.target.value);
             setErrorMessage(''); 
