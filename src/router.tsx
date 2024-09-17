@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Feed from './pages/Feed';
 import Profile from './pages/Profile';
 import Local from './pages/Local';
+import EditProfile from './pages/EditProfile';
 
 const AppRouter: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const AppRouter: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/local/:id" element={<Local />} />
+        <Route path="/profile/edit" element={<EditProfile />} />
       </Routes>
     </Router>
   );

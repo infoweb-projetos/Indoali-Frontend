@@ -69,6 +69,7 @@ const UserProfile: React.FC = () => {
         <p className="bg-white"><b>Nome:</b> {userData.dados.name}</p>
         <p className="bg-white"><b>Nome de usuário:</b> {userData.dados.userName}</p>
         <p className="bg-white"><b>Email:</b> {userData.dados.email}</p>
+        <a className="bg-white mt-[5px]" href="/profile/edit" >editar perfil</a>
         <a className="bg-white mt-[5px]" onClick={logout} >sair</a>
         <a className="bg-white m-[5px]" href="/" >início</a>
       </div>
