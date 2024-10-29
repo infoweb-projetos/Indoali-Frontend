@@ -6,6 +6,7 @@ import Feed from './pages/Feed';
 import Profile from './pages/Profile';
 import Local from './pages/Local';
 import EditProfile from './pages/EditProfile';
+import OutroUsuario from './pages/OutroUsuario';
 
 const AppRouter: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const AppRouter: React.FC = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/local/:id" element={<Local />} />
         <Route path="/profile/edit" element={<EditProfile />} />
+        <Route path="/:userName" element={<OutroUsuario />} />
       </Routes>
     </Router>
   );
