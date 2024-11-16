@@ -120,7 +120,7 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
   return (
     <main className="indoali">
       <div className="h-screen flex flex-col items-center justify-center">
-        <h1 className="bg-white text-lg font-semibold m-[5px]">Perfil do Usuário</h1>
+        <h1 className="bg-white text-lg font-semibold m-[5px]">Edite seu perfil</h1>
         <form onSubmit={handleUpdateProfile}>
             <div className="info" style={{ marginBottom: '20px' }}>
                 <label className="text-white" htmlFor="nome"><b>Nome:</b></label>
@@ -160,7 +160,7 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
         className="delete-button bg-white text-g font-semibold m-[5px]">
         Excluir Perfil
         </button>
-        <a className="bg-white m-[5px]" href="/profile" >voltar</a>
+        <a className="bg-white m-[5px]" onClick={() => navigate(-1)}>voltar</a>
       </div>
     </main>
   );

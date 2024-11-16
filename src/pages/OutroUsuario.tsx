@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const OutroUsuario: React.FC = () => {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const { userName } = useParams<{ userName: string }>();
     const [userData, setUserData] = useState<any>();
 
@@ -52,7 +52,7 @@ const OutroUsuario: React.FC = () => {
         { userData.dados.name && (<p className="bg-white"><b>Nome:</b> {userData.dados.name}</p>)}
         <p className="bg-white"><b>Nome de usuário:</b> {userData.dados.userName}</p>
         <p className="bg-white"><b>Email:</b> {userData.dados.email}</p>
-        <a className="bg-white m-[5px]" href="/" >início</a>
+        <a className="bg-white m-[5px]" onClick={() => navigate(-1)} >voltar</a>
         </div>
     </main>
     )

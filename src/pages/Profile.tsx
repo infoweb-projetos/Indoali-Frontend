@@ -216,7 +216,7 @@ const UserProfile: React.FC = () => {
           )}
         </div>
         <div id="amigos" className="bg-white mt-2">
-          <h2 className="text-g font-semibold mb-2">Seus amigos</h2>
+          <h2 className="text-g font-semibold mb-2"><a href="/amigos">Seus amigos</a></h2>
           <ul>
           {
             primeirosamigos.map((item: Amigo) => {

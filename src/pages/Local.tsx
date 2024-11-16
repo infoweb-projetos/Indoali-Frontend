@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 //import LogoWhite from "../assets/logowhite.svg"
 import FavoritoIcon from "../assets/heart_purple_fill.svg";
 import NaoFavoritoIcon from "../assets/heart_purple_line.svg";
@@ -10,6 +10,7 @@ const Local: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [local, setLocal] = useState<any>(null);
   const [isFavoritado, setIsFavoritado] = useState<boolean>(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchLocal = async () => {
@@ -87,7 +88,7 @@ const Local: React.FC = () => {
               <img src={isFavoritado ? FavoritoIcon : NaoFavoritoIcon} alt="Favoritar" width={24} height={24} />
             </button>
 
-            <a className="bg-white m-[5px]" href="/" >início</a>
+            <a className="bg-white m-[5px]" onClick={() => navigate(-1)} >voltar</a>
         </div>
     </main>
   );
