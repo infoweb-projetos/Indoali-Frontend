@@ -49,7 +49,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <main className="indoali">
+    <main className="indoali logincadastro">
     <div className="h-screen flex flex-col items-center justify-center">
       <figure style={{ marginBottom: '26px' }}>
         <img src={LogoWhite} width="282px" alt="Logotipo do Indoalí" />

@@ -24,11 +24,15 @@ const Register: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+
+      let datacriacao = new Date()
+
       await axios.post('http://localhost:3000/usuarios/', {
         email,
         senha,
         userName,
         name,
+        datacriacao,
       });
       
       const response = await axios.post('http://localhost:3000/auth/login', {
@@ -64,7 +68,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="indoali">
+    <main className="indoali logincadastro">
       <div className="h-screen flex flex-col items-center justify-center">
         <figure style={{ marginBottom: '26px' }}>
           <img src={LogoWhite} width="282px" alt="Logotipo do Indoalí" />
@@ -115,7 +119,7 @@ const Register: React.FC = () => {
           </div>
         </form>
       </div>
-    </div>
+    </main>
     
   );
 };

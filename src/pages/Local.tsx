@@ -74,7 +74,11 @@ const Local: React.FC = () => {
   };
 
   if (!local) {
-    return <div>Carregando...</div>;
+    return <main className="indoali">
+      <div className="h-screen flex flex-col items-center justify-center">
+      <h1 className="bg-white text-lg font-semibold m-[5px]">Carregando...</h1>
+      </div>
+    </main>;
   }
 
   return (

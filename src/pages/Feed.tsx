@@ -50,10 +50,10 @@ const Feed: React.FC = () => {
                 <div className="mt-5">
                     <h2 className="bg-white text-g font-semibold mb-2">Locais Disponíveis:</h2>
                     <ul>
-                    {
+                    {localStorage.getItem('token') ?
                       lugares.map((item: Lugar) => {
                         return <li key={item.id} className="bg-white"><a href={`/local/${item.id}`}>{item.name}</a></li>
-                      })
+                      }) : null
                     }
                     </ul>
                 </div>

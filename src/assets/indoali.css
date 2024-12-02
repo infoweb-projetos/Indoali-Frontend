@@ -6,15 +6,18 @@
         padding: 0;
     }
 
-.indoali{
-        background-color: #7F6EF2;
-        width: 400px;
+    .indoali{
+        min-width: 344px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto;
         flex-direction: column;
-        height: 840px;
+        /* min-height: 480px; */
+    }
+
+    .logincadastro{
+        background-color: #7F6EF2;
     }
 
     figure{
@@ -26,9 +29,9 @@
     }
     .info input{
         border-radius: 11px;
-        background-color: white;
+        background-color: #F7F5FF;
         font-family: Mulish;
-        color: #868686;
+        color: #7C7A87;
         width: 322px;
         height: 46px;
         padding-left: 1em;
@@ -43,15 +46,16 @@
         margin: 0 auto;
         display: flex;
         justify-content: space-between; 
-        color: white;
+        color: #F7F5FF;
         font-family: Mulish;
         font-size: 14px;
         font-weight: 600;
         width: 322px;
     }
 
-    a{
-        color: white;
+    #log-links a{
+        color: #F7F5FF;
+        text-decoration: underline;
     }
 
     #enviar{
@@ -60,7 +64,7 @@
         border-radius: 11px;
         background-color: #ff9500;
         font-family: Mulish;
-        color: white;
+        color: #F7F5FF;
         width: 322px;
         height: 39px;
         text-align: center;
@@ -68,7 +72,7 @@
         display: flex;
         justify-content: center;
         font-size: 17px;
-        box-shadow: 0px 4px 4px #000000 20%;
+        box-shadow: 0px 4px 4px #2F2959 25%;
     }
 
     .info{

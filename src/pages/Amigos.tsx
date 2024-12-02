@@ -307,7 +307,7 @@ const Amigos: React.FC = () => {
           {
             amigos.map((item: Amigo) => {
               return <li key={item.id} className="bg-white">
-                <a className="m-[5px]" href={`/${item.username}`}>{item.name ? item.name : item.username}</a>
+                <a className="m-[5px]" href={`/user/${item.username}`}>{item.name ? item.name : item.username}</a>
                 |
                 <button
                 onClick={() => apagaramizade(item.id)}
@@ -326,7 +326,7 @@ const Amigos: React.FC = () => {
           {
             recebidas.map((item: Solicitacao) => {
               return <li key={item.id} className="bg-white">
-                <a className="m-[5px]" href={`/${item.username}`}>{item.name ? item.name : item.username}</a>
+                <a className="m-[5px]" href={`/user/${item.username}`}>{item.name ? item.name : item.username}</a>
                 |
                 <button
                 onClick={() => aceitaramizade(item.id)}
@@ -349,7 +349,7 @@ const Amigos: React.FC = () => {
           {
             enviadas.map((item: Solicitacao) => {
               return <li key={item.id} className="bg-white">
-                <a className="m-[5px]" href={`/${item.username}`}>{item.name ? item.name : item.username}</a>
+                <a className="m-[5px]" href={`/user/${item.username}`}>{item.name ? item.name : item.username}</a>
                  |
                 <button
                 onClick={() => apagaramizade(item.id)}
