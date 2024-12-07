@@ -8,6 +8,7 @@ import Inicio from '../assets/inicioicon.svg';
 import Busca from '../assets/buscaicon.svg';
 import Planner from '../assets/plannericon.svg';
 import Perfil from '../assets/perfilselec.svg';
+import { TextareaAutosize } from '@mui/material';
 
 const OutroUsuario: React.FC = () => {
     const navigate = useNavigate();
@@ -138,10 +139,10 @@ const OutroUsuario: React.FC = () => {
     }
   }
 
-  const aceitarAmizade = async (id: any) => {
+  const aceitarAmizade = async () => {
     try {
         const token = localStorage.getItem('token');
-        await axios.patch(`http://localhost:3000/amizades/${id}`, 
+        await axios.patch(`http://localhost:3000/amizades/${idAmizade}`, 
             {aceito: true},
             {
             headers: {
@@ -159,18 +160,18 @@ return (
     <main className="indoali">
         <header className="p-4 flex items-center justify-between bg-[#F7F5FF] w-screen">
         <button >
-        <img src={Voltar} alt="Sair da conta" onClick={() => navigate(-1)} />
+        <img className="h-5 w-5" src={Voltar} alt="Sair da conta" onClick={() => navigate(-1)} />
         </button>
-        <h1 className="text-lg text-[#2F2959] font-bold">Perfil de {userData.dados.name ? userData.dados.name.split(" ")[0] : userData.dados.userName.split(" ")[0]}</h1>
+        <h1 className="text-lg truncate pl-2 pr-2 text-[#2F2959] font-bold">Perfil de {userData.dados.name ? userData.dados.name.split(" ")[0] : userData.dados.userName.split(" ")[0]}</h1>
         <button>
         <img src={Notif} alt="Notificações" />
         </button>
     </header>
     <section className="w-full p-4">
         <div className="flex items-center justify-between space-x-4">
-        <div className="flex flex-col">
+        <div className="flex flex-col w-3/5">
             
-            <h2 className="text-xl font-semibold text-[#7F6EF2]">{userData.dados.name ? userData.dados.name : userData.dados.userName}</h2>
+            <h2 className="text-xl font-semibold text-[#7F6EF2] truncate">{userData.dados.name ? userData.dados.name : userData.dados.userName}</h2>
             <p className="text-base text-[#7C7A87]">@{userData.dados.userName}</p>
             <p className="text-xs text-[#E98800]">Perfil criado em {userData.dados.datacriacao.split("-")[2].split("T")[0]}/{userData.dados.datacriacao.split("-")[1]}/{userData.dados.datacriacao.split("-")[0]}</p>
             {relationshipStatus === 'amigo' && (
@@ -195,7 +196,7 @@ return (
               )}
 
               {relationshipStatus === 'recebida' && (
-                <div className="flex justify-between">
+                <div className="flex">
                 <button className="mt-2 w-20 mr-1 py-1 bg-[#7F6EF2] text-white rounded-md text-base"
                   onClick={aceitarAmizade}>
                   Aceitar
@@ -211,7 +212,7 @@ return (
     </div>
         <div className="mt-4">
         <h3 className="text-[#7F6EF2]">Sobre esse perfil:</h3>
-        <textarea className="resize-none w-full mt-2 p-3 border border-[#7F6EF2] rounded-md text-base" readOnly rows={3} value={userData.dados.descricao}/>
+        <TextareaAutosize className="resize-none w-full mt-2 p-3 border border-[#7F6EF2] rounded-md text-base" readOnly minRows={3} value={userData.dados.descricao}/>
         </div>
     </section>
     <section>

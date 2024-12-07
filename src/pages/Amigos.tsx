@@ -375,7 +375,7 @@ const Amigos: React.FC = () => {
             Adicionar Amigo
           </button>
           {errorMessage && (
-          <p className="text-white text-xs text-center mt-[5px]">
+          <p className="text-[#ff0000] text-xs text-center mt-[5px]">
             {errorMessage}
           </p>
           )}

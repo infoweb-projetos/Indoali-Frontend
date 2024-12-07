@@ -93,7 +93,7 @@ const Local: React.FC = () => {
 
   return (
     <main className="indoali">
-        <section style={{backgroundImage: `url(${PadraoImg})`}} className="p-4 h-48 w-screen flex flex-col justify-between shadow-md bg-cover">
+        <section style={{backgroundImage: `url(${PadraoImg})`}} className="p-4 h-48 w-full flex flex-col justify-between shadow-md bg-cover">
     <a className="bg-white w-8 h-8 rounded-full drop-shadow content-center items-center" onClick={() => navigate(-1)} >
       <img  className="mx-auto" width="16px" src={VoltarIcon} alt="Voltar" />
     </a>
@@ -104,28 +104,28 @@ const Local: React.FC = () => {
       </button>
     </div>
   </section>
-  <section className="p-4 w-screen rounded-b-2xl shadow">
-    <p className="text-[#A7A7A7]">Informações</p>
+  <section className="p-4 w-full rounded-b-2xl shadow bg-[#F7F5FF]">
+    <p className="text-[#7C7A87]">Informações</p>
     <div className="my-2 flex items-center">
       <img className="w-4 h-4" src={EstrelaIcon}/>
-      <p className="ml-0.5 mr-2 text-[#2F2959]"><b>3.7</b></p>
+      <p className="ml-1 mr-2 text-[#2F2959]"><b>3.7</b></p>
       <a href="">
         <p className="text-[#2F2959]"><u>Ver avaliações</u></p>
       </a>
     </div>
-    <div className="mb-2 flex items-center">
+    <div className="mb-2 flex items-center" onClick={() => window.open(`https://www.google.com.br/maps/search/${local.dados.endereco}`, "_blank")}>
       <img className="w-3.5 h-4 mr-2" src={PinIcon} />
-      <p className="text-[#7F6EF2]">{local.dados.endereco}</p>
+      <p className="text-[#7F6EF2] hover:underline hover:text-[#2F2959]">{local.dados.endereco}</p>
     </div>
     <div className="mb-2 flex items-center">
       <img className="w-4 h-4 mr-2" src={RelogioIcon} />
-      <p className="text-[#7F6EF2]">Todos os dias de 17:00 - 00:00</p>
+      <p className="text-[#7F6EF2] hover:text-[#2F2959]">Todos os dias de 17:00 - 00:00</p>
     </div>
     <div className="mb-2 flex items-center">
       <img className="w-4 h-4 mr-2" src={TelefoneIcon} />
-      <p className="text-[#7F6EF2]">(84) 3222-2682</p>
+      <p className="text-[#7F6EF2] hover:text-[#2F2959]">(84) 3222-2682</p>
     </div>
-    <ul className="flex">
+    <ul className="flex justify-end">
       <li className="mr-2 bg-white w-10 h-10 rounded-full drop-shadow content-center items-center">
         <a href="">
           <img className="mx-auto" src={FacebookIcon} width="20px" alt="Facebook" />
@@ -138,9 +138,9 @@ const Local: React.FC = () => {
       </li>
     </ul>
   </section>
-  <section className="w-screen p-4">
+  <section className="w-full p-4">
     <p className="text-[#2F2959] mb-4">{local.dados.descricao}</p>
-    <div className="flex flex-col italic text-[#FF9500] mb-4">
+    <div className="flex flex-col italic text-[#E98800] mb-4">
       <div className="flex items-center mb-2">
         <img src={FogoIcon} className="mr-2 w-3.5 h-4" />
         <h3>Promoção</h3>
@@ -149,19 +149,19 @@ const Local: React.FC = () => {
         <img className="rounded-lg" src={PadraoImg} alt="Pastel de carne" />
       </picture>
     </div>
-    <div className="flex flex-col italic text-[#A7A7A7] mb-4">
+    <div className="flex flex-col italic text-[#7C7A87] mb-4">
       <div className="flex items-center mb-2">
         <img src={CameraIcon} className="mr-2 w-4 h-3.5" />
         <h3>Galeria</h3>
       </div>
-      <div className="carousel carousel-center max-w-md space-x-4 p-4">
-        <div className="carousel-item">
+      <div className="carousel carousel-center space-x-4 flex overflow-x-auto">
+        <div className="carousel-item shrink-0 w-9/12">
           <img className="rounded-lg" src={PadraoImg} />
         </div>
-        <div className="carousel-item">
+        <div className="carousel-item shrink-0 w-9/12">
           <img className="rounded-lg" src={PadraoImg} />
         </div>
-        <div className="carousel-item">
+        <div className="carousel-item shrink-0 w-9/12">
           <img className="rounded-lg" src={PadraoImg} />
         </div>
       </div>

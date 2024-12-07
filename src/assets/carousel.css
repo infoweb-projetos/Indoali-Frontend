@@ -1,0 +1,141 @@
+.carousel-container {
+  width: 100%;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.3s ease-in-out; /* Reduzimos o tempo da transição */
+  scroll-behavior: smooth;
+}
+
+.carousel-item {
+  min-width: 100%;
+  position: relative;
+}
+
+.carousel-item img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 80%;
+}
+
+.indicator-container {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.indicator {
+  height: 8px;
+  width: 40px;
+  background-color: #ddd;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+  background-color: #ff0099;
+}
+
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.carousel-indicator.active {
+  background-color: #00D0FF;
+}
+
+ /* Apenas o que não foi possível adaptar com Tailwind */
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.carousel-indicator.active {
+  background-color: #00D0FF;
+}
+
+
+.section h2 {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.section-header h2 {
+  color: #E98800;
+}
+
+.section-header a {
+  text-decoration: none;
+  color: #E98800;
+}
+
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  /*scroll-snap-type: x mandatory;*/
+  gap: 15px;
+  padding: 10px;
+  /*justify-content: space-around;*/
+
+}
+
+.carousel-item {
+  min-width: 80px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  text-align: center;
+  display: flex
+;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+.carousel-item img {
+  width: 62px;
+  height: 62px;
+  border-radius: 100%;
+  background-color: #F7F5FF;
+}
+
+.carousel-item p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  max-width: 70px;
+}
+
+/* Estilização para ocultar a barra de rolagem em dispositivos móveis */
+.carousel::-webkit-scrollbar {
+  display: none;
+}

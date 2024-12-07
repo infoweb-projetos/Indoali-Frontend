@@ -10,6 +10,8 @@ import Planner from '../assets/plannericon.svg';
 import Perfil from '../assets/perfilselec.svg';
 import FavIcon from '../assets/heart_orange_fill.svg';
 import AmiIcon from '../assets/amigosicon.svg'
+import Local from '../assets/localimage.jpg'
+import { TextareaAutosize } from '@mui/material';
 
 type Favorito = {
   id: number;
@@ -261,9 +263,9 @@ return (
   </header>
   <section className="w-full p-4">
     <div className="flex items-center justify-between space-x-4">
-      <div className="flex flex-col">
+      <div className="flex flex-col w-3/5">
           
-          <h2 className="text-xl font-semibold text-[#7F6EF2]">{userData.dados.name ? userData.dados.name : userData.dados.userName}</h2>
+          <h2 className="text-xl font-semibold text-[#7F6EF2] truncate">{userData.dados.name ? userData.dados.name : userData.dados.userName}</h2>
           <p className="text-base text-[#7C7A87]">@{userData.dados.userName}</p>
           <p className="text-xs text-[#E98800]">Perfil criado em {userData.dados.datacriacao.split("-")[2].split("T")[0]}/{userData.dados.datacriacao.split("-")[1]}/{userData.dados.datacriacao.split("-")[0]}</p>
           <button className="mt-2 w-40 py-1 bg-[#7F6EF2] text-white rounded-md text-base" onClick={() => window.open("/profile/edit", "_self")}>Editar perfil</button>
@@ -272,7 +274,7 @@ return (
   </div>
     <div className="mt-4">
       <h3 className="text-[#7F6EF2]">Sobre seu perfil:</h3>
-      <textarea className="resize-none w-full mt-2 p-3 border border-[#7F6EF2] rounded-md text-base" readOnly rows={3} value={userData.dados.descricao}/>
+      <TextareaAutosize className="resize-none w-full mt-2 p-3 border border-[#7F6EF2] rounded-md text-base" readOnly minRows={3} value={userData.dados.descricao}/>
     </div>
   </section>
   <section className="p-4 w-full">
@@ -339,7 +341,7 @@ return (
         primeirosfavoritos.map((item: Favorito) => {
         return <div className="text-center" key={item.id}>
                 <a href={`/local/${item.id_lugar}`}>
-                <img className="w-12 h-12 rounded-full m-auto" src={Foto} alt={item.name}/>
+                <img className="w-12 h-12 rounded-full m-auto" src={Local} alt={item.name}/>
                 <p className="max-h-8 text-xs text-[#7C7A87]">{item.name}</p>
                 </a>
                </div>
