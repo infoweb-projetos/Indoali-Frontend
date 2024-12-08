@@ -97,4 +97,5 @@ track.addEventListener('mouseup', () => {
 track.addEventListener('mouseleave', () => {
   isDragging = false;
 });
+track.addEventListener('touchmove', e => {e.preventDefault()}, false);
 startAutoPlay();

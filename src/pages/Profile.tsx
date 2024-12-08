@@ -30,6 +30,7 @@ const UserProfile: React.FC = () => {
   const [userData, setUserData] = useState<any>();
   const [favoritos, setFavoritos] = useState<Favorito[]>([]);
   const [amigos, setAmigos] = useState<Amigo[]>([]);
+  const [sair, setSair] = useState<boolean>(false);
   
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -254,7 +255,7 @@ return (
   <main className="indoali">
       <header className="p-4 flex items-center justify-between bg-[#F7F5FF] w-screen">
     <button >
-      <img src={Logout} alt="Sair da conta" onClick={logout} />
+      <img src={Logout} alt="Sair da conta" onClick={() => {setSair(true)}} />
     </button>
     <h1 className="text-lg text-[#2F2959] font-bold">Seu Perfil</h1>
     <button>
@@ -288,7 +289,10 @@ return (
       )}
     </div>
     {amigos.length <= 0 && (
-      <p>Você não tem nenhum amigo aqui</p>
+      <div className='flex flex-col text-[#2F2959]'>
+        <p className='text-center'>Você não tem nenhum amigo aqui</p>
+        <a className='m-auto' href="/amigos">+ Encontre seus amigos</a>
+      </div>
     )}
     <div className="grid grid-cols-5 gap-5 overflow-x-auto">
       {
@@ -334,7 +338,10 @@ return (
       )}
     </div>
     {favoritos.length <= 0 && (
-        <p>Você não favoritou nenhum lugar</p> // Redireciona para uma página com todos os favoritos
+      <div className='flex flex-col text-[#2F2959]'>
+        <p className='text-center'>Você não favoritou nenhum lugar</p>
+        <a className='m-auto' href="/pesquisar">+ Enconte novos lugares</a>
+      </div>
     )}
     <div className="grid grid-cols-5 gap-4 overflow-x-auto">
       {
@@ -402,6 +409,18 @@ return (
       </div>
     </nav>
   </section>
+  { sair ? <>
+        <div className="w-full h-full bg-black bg-opacity-50 fixed top-0" onClick={() => {setSair(false)}}></div>
+        <div className="bg-white fixed bottom-1/2 flex flex-col justify-center p-4 text-center rounded-md">
+          <p className="text-[#2F2959] text-lg mb-2">Tem certeza que deseja sair de sua conta?</p>
+          {/* <p className="text-[#ff0000]">Essa ação não pode ser desfeita!</p> */}
+          <div className="flex justify-between">
+            <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => {setSair(false)}}>Cancelar</button>
+            <button className="bg-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={logout}>Sair</button>
+          </div>
+        </div>
+      </> : null
+      }
   </main>
   );
 };

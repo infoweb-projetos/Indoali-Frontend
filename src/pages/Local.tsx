@@ -117,26 +117,36 @@ const Local: React.FC = () => {
       <img className="w-3.5 h-4 mr-2" src={PinIcon} />
       <p className="text-[#7F6EF2] hover:underline hover:text-[#2F2959]">{local.dados.endereco}</p>
     </div>
+    {local.dados.horarios ? 
     <div className="mb-2 flex items-center">
       <img className="w-4 h-4 mr-2" src={RelogioIcon} />
-      <p className="text-[#7F6EF2] hover:text-[#2F2959]">Todos os dias de 17:00 - 00:00</p>
-    </div>
+      <p className="text-[#7F6EF2] hover:text-[#2F2959]">{local.dados.horarios}</p>
+    </div> : null
+    }
+    {local.dados.numero ? 
     <div className="mb-2 flex items-center">
       <img className="w-4 h-4 mr-2" src={TelefoneIcon} />
-      <p className="text-[#7F6EF2] hover:text-[#2F2959]">(84) 3222-2682</p>
-    </div>
+      <p className="text-[#7F6EF2] hover:text-[#2F2959]">{local.dados.numero}</p>
+    </div> : null
+    }
+    {local.dados.facebook || local.dados.instagram ?
     <ul className="flex justify-end">
+      {local.dados.facebook ?
       <li className="mr-2 bg-white w-10 h-10 rounded-full drop-shadow content-center items-center">
-        <a href="">
+        <a href={local.dados.facebook} target="_blank">
           <img className="mx-auto" src={FacebookIcon} width="20px" alt="Facebook" />
         </a>
-      </li>
+      </li> : null
+      }
+      {local.dados.instagram ?
       <li className="bg-white w-10 h-10 rounded-full drop-shadow content-center items-center">
-        <a href="">
+        <a href={local.dados.instagram} target="_blank">
           <img className="mx-auto" src={InstagramIcon} width="20x" alt="Instagram" />
         </a>
-      </li>
-    </ul>
+      </li> : null
+      }
+    </ul> : null
+    }
   </section>
   <section className="w-full p-4">
     <p className="text-[#2F2959] mb-4">{local.dados.descricao}</p>

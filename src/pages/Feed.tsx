@@ -166,7 +166,7 @@ const Feed: React.FC = () => {
         </section>
                 
         <div className="flex items-center bg-[#E8E5F8] p-2 rounded-lg shadow-sm mt-6">
-          <input type="text" placeholder="Procurar amigos..." className="w-full bg-[#E8E5F8] text-sm outline-none px-2 text-[#7C7A87] placeholder-[#7C7A87]"/>
+          <input type="text" placeholder="Procurar por novos rolês..." className="w-full bg-[#E8E5F8] text-sm outline-none px-2 text-[#7C7A87] placeholder-[#7C7A87]"/>
           <button>
             <img src={Lupa} alt="Buscar" className="w-5 h-5"/>
           </button>

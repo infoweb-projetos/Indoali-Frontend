@@ -123,7 +123,7 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
     <main className="indoali h-screen justify-start">
       { sair ? <>
         <div className="w-full h-full bg-black bg-opacity-50 fixed" onClick={() => {setSair(false)}}></div>
-        <div className="bg-white absolute bottom-1/2 flex flex-col justify-center p-4 text-center rounded-md">
+        <div className="bg-white fixed bottom-1/2 flex flex-col justify-center p-4 text-center rounded-md">
           <p className="text-[#2F2959] text-lg">Tem certeza que deseja excluir sua conta?</p>
           <p className="text-[#ff0000]">Essa ação não pode ser desfeita!</p>
           <div className="flex justify-between">
