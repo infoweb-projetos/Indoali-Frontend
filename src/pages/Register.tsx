@@ -86,7 +86,7 @@ const Register: React.FC = () => {
             <input type="text" id="username" placeholder="@username" required 
             value={userName} 
             onChange={(e) => {
-              setUserName(e.target.value); 
+              setUserName(e.target.value.split(" ").join("").replace(/[`~!@#$%^&*()_|+\-=?;:´¨¹²³£¢¬°'",.<>{}\[\]\\\/]/gi, '').toLowerCase()); 
               handleInputChange();
             }}/>
           </div>

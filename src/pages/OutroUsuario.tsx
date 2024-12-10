@@ -7,7 +7,7 @@ import Notif from '../assets/notif.svg';
 import Inicio from '../assets/inicioicon.svg';
 import Busca from '../assets/buscaicon.svg';
 import Planner from '../assets/plannericon.svg';
-import Perfil from '../assets/perfilselec.svg';
+import Perfil from '../assets/perfilicon.svg';
 import { TextareaAutosize } from '@mui/material';
 
 const OutroUsuario: React.FC = () => {
