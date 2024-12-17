@@ -144,7 +144,9 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
         <form onSubmit={handleUpdateProfile}>
             <div className="info" style={{ marginBottom: '20px' }}>
                 <label className="text-[#2F2959]" htmlFor="nome"><b>Nome:</b></label>
-                <input className="border border-[#7F6EF2]" type="text" id="Nome" onChange={(e) => setName(e.target.value)} value={name} placeholder="nome"/>
+                <input className="border border-[#7F6EF2]" type="text" id="Nome" 
+                onChange={(e) => setName(e.target.value.replace(/[\\\\\\/]/gi, '')
+                )} value={name} placeholder="nome"/>
             </div>
             <div className="info" style={{ marginBottom: '20px' }}>
                 <label className="text-[#2F2959]" htmlFor="username"><b>Username:</b></label>
@@ -152,7 +154,7 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
                     value={userName} 
                     placeholder="Nome de usuário"
                     onChange={(e) => {
-                        setUserName(e.target.value); 
+                        setUserName(e.target.value.split(" ").join("").replace(/[`~!@#$%^&*()|+\=?;:´¨¹²³£¢¬°'",<>{}ºª§\[\]\\\/]/gi, '').toLowerCase()); 
                         handleInputChange();
                     }}/> 
             </div>

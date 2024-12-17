@@ -464,7 +464,7 @@ const Amigos: React.FC = () => {
                 <button onClick={() => window.open(`/user/${item.username}`, "_self")} className="text-sm text-white bg-[#7F6EF2] py-0,8 px-5 rounded-md">Ver perfil</button>
               </div>
             </div>
-            <button>
+            <button onClick={() => handleDetailsClick(item.id)}>
               <img src={Details} alt="info" className="w-6 h-6"/>
             </button>
           </div>
@@ -490,7 +490,7 @@ const Amigos: React.FC = () => {
                 <button onClick={() => window.open(`/user/${item.username}`, "_self")} className="text-sm text-white bg-[#7F6EF2] py-0,8 px-5 rounded-md">Ver perfil</button>
               </div>
             </div>
-            <button>
+            <button onClick={() => handleDetailsClick(item.id)}>
               <img src={Details} alt="info" className="w-6 h-6"/>
             </button>
           </div>
@@ -586,27 +586,72 @@ const Amigos: React.FC = () => {
       </nav>
     </section>
     {
-            amigos.map((item: Amigo) => {
-            return <>
-            {openPopper === item.id && (
-              <>
-              <div className="w-full h-full bg-black bg-opacity-50 fixed top-0 right-0 z-10" onClick={() => handleDetailsClick(item.id)}></div>
-              <div className="bg-white fixed bottom-1/2 flex flex-col justify-center p-4 text-center rounded-md z-20">
-                <p className="text-[#E98800] text-lg mb-1 font-semibold">{item.name ? item.name : item.username}</p>
-                <p className="text-[#2F2959] text-base mb-1">@{item.username}</p>
-                <div className="border border-[#7F6EF2] rounded-md m-auto mb-2 p-1" style={{ maxWidth: '17rem' }}>
-                  <p className="text-[#2F2959] text-base">{item.descricao}</p>
-                </div>
-                <div className="flex justify-between space-x-4">
-                  <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => handleDetailsClick(item.id)}>Cancelar</button>
-                  <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800]" onClick={apagaramizade}>Remover amizade</button>
-                </div>
-              </div>
-            </> 
-            )}
-            </>
-            })
-          }
+    amigos.map((item: Amigo) => {
+    return <>
+      {openPopper === item.id && (
+        <>
+        <div className="w-full h-full bg-black bg-opacity-50 fixed top-0 right-0 z-10" onClick={() => handleDetailsClick(item.id)}></div>
+        <div className="bg-white fixed flex flex-col justify-center p-4 text-center rounded-md z-20" style={{ top: '25%' }}>
+          <p className="text-[#E98800] text-lg mb-1 font-semibold">{item.name ? item.name : item.username}</p>
+          <p className="text-[#2F2959] text-base mb-1">@{item.username}</p>
+          <div className="border border-[#7F6EF2] rounded-md m-auto mb-2 p-1 overflow-hidden" style={{ width: '17rem', height: '5.125rem'}}>
+            <p className="text-[#2F2959] text-base">{item.descricao}</p>
+          </div>
+          <div className="flex justify-between space-x-4">
+            <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => handleDetailsClick(item.id)}>Cancelar</button>
+            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800]" onClick={apagaramizade}>Remover amizade</button>
+          </div>
+        </div>
+      </> 
+      )}
+      </>
+      })
+    }
+    {
+    recebidas.map((item: Solicitacao) => {
+    return <>
+      {openPopper === item.id && (
+        <>
+        <div className="w-full h-full bg-black bg-opacity-50 fixed top-0 right-0 z-10" onClick={() => handleDetailsClick(item.id)}></div>
+        <div className="bg-white fixed flex flex-col justify-center p-4 text-center rounded-md z-20" style={{ top: '25%' }}>
+          <p className="text-[#E98800] text-lg mb-1 font-semibold">{item.name ? item.name : item.username}</p>
+          <p className="text-[#2F2959] text-base mb-1">@{item.username}</p>
+          <div className="border border-[#7F6EF2] rounded-md m-auto mb-2 p-1 overflow-hidden" style={{ width: '17rem', height: '5.125rem'}}>
+            <p className="text-[#2F2959] text-base">{item.descricao}</p>
+          </div>
+          <div className="flex justify-between">
+            <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => handleDetailsClick(item.id)}>Cancelar</button>
+            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800] mx-1.5" onClick={apagaramizade}>Rejeitar</button>
+            <button className="transparent bg-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={aceitaramizade}>Aceitar</button>
+          </div>
+        </div>
+      </> 
+      )}
+      </>
+      })
+    }
+    {
+    enviadas.map((item: Solicitacao) => {
+    return <>
+      {openPopper === item.id && (
+        <>
+        <div className="w-full h-full bg-black bg-opacity-50 fixed top-0 right-0 z-10" onClick={() => handleDetailsClick(item.id)}></div>
+        <div className="bg-white fixed flex flex-col justify-center p-4 text-center rounded-md z-20" style={{ top: '25%' }}>
+          <p className="text-[#E98800] text-lg mb-1 font-semibold">{item.name ? item.name : item.username}</p>
+          <p className="text-[#2F2959] text-base mb-1">@{item.username}</p>
+          <div className="border border-[#7F6EF2] rounded-md m-auto mb-2 p-1 overflow-hidden" style={{ width: '17rem', height: '5.125rem'}}>
+            <p className="text-[#2F2959] text-base">{item.descricao}</p>
+          </div>
+          <div className="flex justify-between space-x-4">
+            <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => handleDetailsClick(item.id)}>Cancelar</button>
+            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800] mx-1.5" onClick={apagaramizade}>Cancelar Solicitação</button>
+          </div>
+        </div>
+      </> 
+      )}
+      </>
+      })
+    }
     </main>
   );
 };

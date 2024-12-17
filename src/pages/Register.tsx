@@ -78,7 +78,7 @@ const Register: React.FC = () => {
             <label htmlFor="nome"></label>
             <input type="text" id="nome" placeholder="nome" 
             value={name} 
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value.replace(/[`~!@#$%^&*()|+\=?;:´¨¹²³£¢¬°'",<>{}ºª§\[\]\\\/]/gi, ''))}
             />
           </div>
           <div className="info" style={{ marginBottom: '20px' }}>
@@ -86,7 +86,7 @@ const Register: React.FC = () => {
             <input type="text" id="username" placeholder="@username" required 
             value={userName} 
             onChange={(e) => {
-              setUserName(e.target.value.split(" ").join("").replace(/[`~!@#$%^&*()_|+\-=?;:´¨¹²³£¢¬°'",.<>{}\[\]\\\/]/gi, '').toLowerCase()); 
+              setUserName(e.target.value.split(" ").join("").replace(/[`~!@#$%^&*()|+\=?;:´¨¹²³£¢¬°'",<>{}ºª§\[\]\\\/]/gi, '').toLowerCase()); 
               handleInputChange();
             }}/>
           </div>
