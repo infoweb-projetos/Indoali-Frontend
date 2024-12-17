@@ -9,6 +9,7 @@ import Voltar from '../assets/voltar.svg';
 import Details from '../assets/details.svg';
 import Lupa from '../assets/lupa.svg';
 import Foto from '../assets/profileimage.jpeg';
+import Mais from '../assets/add.svg';
 
 type Amigo = {
   id: number;
@@ -32,6 +33,7 @@ const Amigos: React.FC = () => {
   const [userData, setUserData] = useState<any>();
   const [amigos, setAmigos] = useState<Amigo[]>([]);
   const [solicitacoes, setSolicitacoes] = useState<Solicitacao[]>([]);
+  const [add, setAdd] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState('');
   const [openPopper, setOpenPopper] = useState<number | null>(null);
@@ -236,10 +238,13 @@ const Amigos: React.FC = () => {
           name: usuario.name,
           username: usuario.userName,
           enviado: true,
-          descricao: usuario.dados.descricao
+          descricao: usuario.descricao
         },
       ]);
       console.log(usuario)
+      setUsername('')
+      setAdd(false)
+      navigate(`/user/${usuario.userName}`)
       //alert('Solicitação de amizade enviada');
     } catch (error) {
       setErrorMessage('Erro ao enviar solicitação')
@@ -313,95 +318,6 @@ const Amigos: React.FC = () => {
 
   const enviadas = solicitacoes.filter( (s) => s.enviado == true );
   const recebidas = solicitacoes.filter( (s) => s.enviado == false );
-
-  // return (
-  //   <main className="indoali">
-  //     <div className="h-screen flex flex-col items-center justify-center">
-  //       <h1 className="bg-white text-lg font-semibold m-[5px]">Amizades</h1>
-  //       <div id="amigos" className="bg-white mt-2">
-  //         <h2 className="text-g font-semibold mb-2">Seus amigos</h2>
-  //         <ul>
-  //         {
-  //           amigos.map((item: Amigo) => {
-  //             return <li key={item.id} className="bg-white">
-  //               <a className="m-[5px]" href={`/user/${item.username}`}>{item.name ? item.name : item.username}</a>
-  //               |
-  //               <button
-  //               onClick={() => apagaramizade(item.id)}
-  //               className="bg-white text-g m-[5px]">remover amizade</button>
-  //               </li>
-  //           })
-  //         }
-  //         {amigos.length <= 0 && (
-  //           <p>Você não tem nenhum amigo aqui</p>
-  //         )}
-  //         </ul>
-  //       </div>
-  //       <div id="s_recebidas" className="bg-white mt-2">
-  //         <h2 className="text-g font-semibold mb-2">Solicitações recebidas</h2>
-  //         <ul>
-  //         {
-  //           recebidas.map((item: Solicitacao) => {
-  //             return <li key={item.id} className="bg-white">
-  //               <a className="m-[5px]" href={`/user/${item.username}`}>{item.name ? item.name : item.username}</a>
-  //               |
-  //               <button
-  //               onClick={() => aceitaramizade(item.id)}
-  //               className="bg-white text-g m-[5px]">aceitar</button>
-  //               |
-  //               <button
-  //               onClick={() => apagaramizade(item.id)}
-  //               className="bg-white text-g m-[5px]">declinar</button>
-  //               </li>
-  //           })
-  //         }
-  //         {recebidas.length <= 0 && (
-  //           <p>Você não tem nenhuma solicitação de amizade</p>
-  //         )}
-  //         </ul>
-  //       </div>
-  //       <div id="s_enviadas" className="bg-white mt-2">
-  //         <h2 className="text-g font-semibold mb-2">Solicitações enviadas</h2>
-  //         <ul>
-  //         {
-  //           enviadas.map((item: Solicitacao) => {
-  //             return <li key={item.id} className="bg-white">
-  //               <a className="m-[5px]" href={`/user/${item.username}`}>{item.name ? item.name : item.username}</a>
-  //                |
-  //               <button
-  //               onClick={() => apagaramizade(item.id)}
-  //               className="bg-white text-g m-[5px]">cancelar</button>
-  //               </li>
-  //           })
-  //         }
-  //         {enviadas.length <= 0 && (
-  //           <p>Você não enviou nenhuma nova solicitação</p>
-  //         )}
-  //         </ul>
-  //       </div>
-  //       <div className="m-4">
-  //         <h2 className="text-g font-semibold mb-2 bg-white">Adicionar amigo</h2>
-  //         <input
-  //           type="text"
-  //           value={username}
-  //           onChange={(e) => {setUsername(e.target.value); handleInputChange();}}
-  //           placeholder="Digite o nome de usuário"
-  //           className="p-2 border rounded"
-  //         />
-  //         <button onClick={adicionarAmizade} className="bg-white text-g m-[5px]">
-  //           Adicionar Amigo
-  //         </button>
-  //         {errorMessage && (
-  //         <p className="text-[#ff0000] text-xs text-center mt-[5px]">
-  //           {errorMessage}
-  //         </p>
-  //         )}
-  //       </div>
-
-  //       <a className="bg-white m-[5px]" onClick={() => navigate(-1)} >voltar</a>
-  //     </div>
-  //   </main>
-  // );
 
   const handleDetailsClick = (id: number) => {
     setOpenPopper(openPopper === id ? null : id);
@@ -562,8 +478,9 @@ const Amigos: React.FC = () => {
         
       </main>
     </div>
+    <button className="bg-[#F7F5FF] rounded-lg p-4 fixed shadow-md bottom-20 right-4"><img src={Mais} onClick={() => {setAdd(true)}}/></button>
     <section>
-      <footer className="p-7"></footer>
+      <footer className="p-12"></footer>
       <nav className="fixed bottom-0 left-0 right-0 bg-[#F7F5FF] shadow-lg p-2 w-screen">
         <div className="flex justify-around">
           <button className="flex flex-col items-center text-[#7F6EF2]" onClick={() => window.open("/", "_self")}>
@@ -585,6 +502,30 @@ const Amigos: React.FC = () => {
         </div>
       </nav>
     </section>
+    { add ? 
+      <>
+        <div className="w-full h-full bg-black bg-opacity-50 fixed top-0 right-0 z-10" onClick={() => {setAdd(false)}}></div>
+        <div className="bg-white fixed bottom-1/2 flex flex-col justify-center p-4 text-center rounded-md z-20">
+          <p className="text-[#2F2959] text-lg">Encontrar um amigo</p>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => {setUsername(e.target.value); handleInputChange();}}
+            placeholder="Digite o nome de usuário"
+            className="text-[#7C7A87] p-2 rounded my-2 border border-[#7F6EF2]"
+          />
+          {errorMessage && (
+          <p className="text-[#ff0000] text-xs text-center">
+            {errorMessage}
+          </p>
+          )}
+          <div className="flex justify-between space-x-4">
+            <button className="text-[#7F6EF2] border border-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2" onClick={() => {setAdd(false)}}>Cancelar</button>
+            <button className="bg-[#7F6EF2] text-white rounded-md pt-1 pb-1 pl-5 pr-5 mt-2" onClick={adicionarAmizade}>Adicionar Amigo</button>
+          </div>
+        </div>
+      </> : null
+    }
     {
     amigos.map((item: Amigo) => {
     return <>
@@ -599,7 +540,7 @@ const Amigos: React.FC = () => {
           </div>
           <div className="flex justify-between space-x-4">
             <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => handleDetailsClick(item.id)}>Cancelar</button>
-            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800]" onClick={apagaramizade}>Remover amizade</button>
+            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800]" onClick={() => apagaramizade(item.id)}>Remover amizade</button>
           </div>
         </div>
       </> 
@@ -621,8 +562,8 @@ const Amigos: React.FC = () => {
           </div>
           <div className="flex justify-between">
             <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => handleDetailsClick(item.id)}>Cancelar</button>
-            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800] mx-1.5" onClick={apagaramizade}>Rejeitar</button>
-            <button className="transparent bg-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={aceitaramizade}>Aceitar</button>
+            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800] mx-1.5" onClick={() => apagaramizade(item.id)}>Rejeitar</button>
+            <button className="transparent bg-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => aceitaramizade(item.id)}>Aceitar</button>
           </div>
         </div>
       </> 
@@ -644,7 +585,7 @@ const Amigos: React.FC = () => {
           </div>
           <div className="flex justify-between space-x-4">
             <button className="bg-[#7F6EF2] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-white" onClick={() => handleDetailsClick(item.id)}>Cancelar</button>
-            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800] mx-1.5" onClick={apagaramizade}>Cancelar Solicitação</button>
+            <button className="transparent border border-[#E98800] rounded-md pt-1 pb-1 pl-5 pr-5 mt-2 text-[#E98800] mx-1.5" onClick={() => apagaramizade(item.id)}>Cancelar Solicitação</button>
           </div>
         </div>
       </> 
