@@ -18,6 +18,7 @@ type Lugar = {
     descricao?: string;
     name: string;
     endereco: string;
+    fotoperfil?: string;
   };
 
 const Feed: React.FC = () => {
@@ -30,10 +31,11 @@ const Feed: React.FC = () => {
             try {
               axios.get("http://localhost:3000/lugares").then((resposta: AxiosResponse) => {
                 // console.log(resposta)
-                const dados = resposta.data.lugares.map((item: { id: number; name: string; }) => {
+                const dados = resposta.data.lugares.map((item: { id: number; name: string; fotoperfil: string; }) => {
                   return {
                     id: item.id,
                     name: item.name,
+                    fotoperfil: item.fotoperfil
                   };
                 });
                 setLugares(dados);
@@ -96,34 +98,23 @@ const Feed: React.FC = () => {
     const IrAoPerfil = () => {
       const token = localStorage.getItem('token');
       if (!token || !userData) {
-          return (<h2 className="text-lg font-bold font-[asap] text-center text-[#2F2959] underline">Faça Login</h2>); 
+          return (<h2 className="text-lg font-bold font-[asap] text-center text-[#2F2959] underline" onClick={logout}>Faça Login</h2>); 
       } else {
+        try {
           return (<h2 className="text-lg truncate pl-2 pr-2 font-bold font-[asap] text-center text-[#2F2959]">Olá, {userData.dados.name ? userData.dados.name.split(" ")[0] : userData.dados.userName.split(" ")[0]}</h2>);
+        } catch {
+          return (<h2 className="text-lg font-bold font-[asap] text-center text-[#2F2959] underline" onClick={logout}>Faça Login</h2>); 
+        }
       }
     }
 
-    // return (
-    //     <main className="indoali">
-    //         <div className="h-screen flex flex-col items-center justify-center">
-    //             <h1 className="bg-white text-lg font-semibold m-[5px]">Home</h1>
-    //             <IrAoPerfil />
-    //             <div className="mt-5">
-    //                 <h2 className="bg-white text-g font-semibold mb-2">Locais Disponíveis:</h2>
-    //                 <ul>
-    //                 {localStorage.getItem('token') ?
-    //                   lugares.map((item: Lugar) => {
-    //                     return <li key={item.id} className="bg-white"><a href={`/local/${item.id}`}>{item.name}</a></li>
-    //                   }) : null
-    //                 }
-    //                 </ul> 
-    //             </div>
-    //         </div>
-    //     </main>
-    // );
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return (<main className="indoali"><a className="bg-white" href="/login" >Login</a></main>); 
+    const logout = async () => {
+      try {
+          localStorage.clear();
+          navigate('/login');
+      } catch (error) {
+          console.error('Erro em sair da conta', error);
+      }
     }
 
     return (
@@ -176,33 +167,17 @@ const Feed: React.FC = () => {
             <div className="section">
             <div className="section-header">
               <h2>🔥 Em alta!</h2>
-              <a href="#">ver mais +</a>
+              <a href="">ver mais +</a>
             </div>
             <div className="carousel" id="carousel-em-alta">
             {localStorage.getItem('token') ?
               lugares.map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
-                        <img src={Local} alt={item.name}/>
+                        <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
               }) : null
             }
-            {/* <div className="carousel-item">
-              <img src="./cores.png" alt="Pastel de Tangará"/>
-              <p>Pastel de Tangará</p>
-            </div>
-            <div className="carousel-item">
-              <img src="./cores.png" alt="Honorato Sushi"/>
-              <p>Honorato Sushi</p>
-            </div>
-            <div className="carousel-item">
-              <img src="./cores.png" alt="Loop"/>
-              <p>Loop</p>
-            </div>
-            <div className="carousel-item">
-              <img src="./cores.png" alt="Frispy"/>
-              <p>Frisson</p>
-            </div> */}
             </div>
             </div>
         </section>
@@ -210,37 +185,17 @@ const Feed: React.FC = () => {
             <div className="section">
             <div className="section-header">
               <h2>🔄 Que tal um replay?</h2>
-              <a href="#">ver mais +</a>
+              <a href="">ver mais +</a>
             </div>
             <div className="carousel" id="carousel-replay">
             {localStorage.getItem('token') ?
               lugares.map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
-                        <img src={Local} alt={item.name}/>
+                        <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
               }) : null
             }
-            {/* <div className="carousel-item">
-              <img src="./cores.png" alt="Game Station"/>
-              <p>Game Station</p>
-            </div>
-            <div className="carousel-item">
-              <img src="./cores.png" alt="Mc Donalds"/>
-              <p>Mc Donalds</p>
-            </div>
-            <div className="carousel-item">
-              <img src="./cores.png" alt="Pará Lanches"/>
-              <p>Pará Lanches</p>
-            </div>
-            <div className="carousel-item">
-              <img src="./cores.png" alt="Scooby Burguer"/>
-              <p>Scooby Burguer</p>
-            </div>
-            <div className="carousel-item">
-              <img src="./cores.png" alt="Cervejaria XYZ"/>
-              <p>Cerebros</p>
-            </div> */}
             </div>
             </div>
         </section>
@@ -248,37 +203,17 @@ const Feed: React.FC = () => {
           <div className="section">
           <div className="section-header">
             <h2>📍 Pertinho de você</h2>
-            <a href="#">ver mais +</a>
+            <a href="">ver mais +</a>
           </div>
           <div className="carousel" id="carousel-replay">
           {localStorage.getItem('token') ?
               lugares.map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
-                        <img src={Local} alt={item.name}/>
+                        <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
               }) : null
             }
-          {/* <div className="carousel-item">
-            <img src="./cores.png" alt="Game Station"/>
-            <p>Game Station</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Mc Donalds"/>
-            <p>Mc Donalds</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Pará Lanches"/>
-            <p>Pará Lanches</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Scooby Burguer"/>
-            <p>Scooby Burguer</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Cervejaria XYZ"/>
-            <p>Cerebros</p>
-          </div> */}
           </div>
           </div>
         </section>
@@ -286,37 +221,17 @@ const Feed: React.FC = () => {
           <div className="section">
           <div className="section-header">
             <h2>💸 Tá liso?</h2>
-            <a href="#">ver mais +</a>
+            <a href="">ver mais +</a>
           </div>
           <div className="carousel" id="carousel-replay">
           {localStorage.getItem('token') ?
               lugares.map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
-                        <img src={Local} alt={item.name}/>
+                        <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
               }) : null
             }
-          {/* <div className="carousel-item">
-            <img src="./cores.png" alt="Game Station"/>
-            <p>Game Station</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Mc Donalds"/>
-            <p>Mc Donalds</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Pará Lanches"/>
-            <p>Pará Lanches</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Scooby Burguer"/>
-            <p>Scooby Burguer</p>
-          </div>
-          <div className="carousel-item">
-            <img src="./cores.png" alt="Cervejaria XYZ"/>
-            <p>Cerebros</p>
-          </div> */}
           </div>
           </div>
         </section>

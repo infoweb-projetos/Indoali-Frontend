@@ -17,12 +17,14 @@ type Favorito = {
   id: number;
   id_lugar: number;
   name: string;
+  fotoperfil?: string;
 };
 type Amigo = {
   id: number;
   id_amigo: number;
   name: string;
   username: string;
+  fotoperfil?: string;
 };
 
 const UserProfile: React.FC = () => {
@@ -95,6 +97,7 @@ const UserProfile: React.FC = () => {
               id: item.id,
               id_lugar: item.id_lugar,
               name: lugar.dados.name,
+              fotoperfil: lugar.dados.fotoperfil
             };
           })
         );
@@ -138,7 +141,8 @@ const UserProfile: React.FC = () => {
               id: item.id,
               id_amigo: item.id_emissor,
               name: amigo.dados.name,
-              username: amigo.dados.userName
+              username: amigo.dados.userName,
+              fotoperfil: amigo.dados.fotoperfil
             };
             } else {
               const userResposta = await axios.get("http://localhost:3000/usuarios/"+item.id_receptor, {
@@ -152,7 +156,8 @@ const UserProfile: React.FC = () => {
                 id: item.id,
                 id_amigo: item.id_receptor,
                 name: amigo.dados.name,
-                username: amigo.dados.userName
+                username: amigo.dados.userName,
+                fotoperfil: amigo.dados.fotoperfil
               };
             }
           })
@@ -170,16 +175,6 @@ const UserProfile: React.FC = () => {
     fetchFavoritos(); 
     fetchAmigos();
   }, []);
-
-  // const login = async () => {
-  //   try {
-  //       localStorage.clear();
-  //       navigate('/login');
-  //   } catch (error) {
-  //       console.error('Erro em ir para login', error);
-  //   }
-  // }
-
 
   if (!userData) {
     //localStorage.clear();
@@ -204,53 +199,6 @@ const UserProfile: React.FC = () => {
   const primeirosamigos = amigos.slice(0, 5);
   //console.log(primeirosamigos)
 
-//   return (
-//     <main className="indoali">
-//       <div className="h-screen flex flex-col items-center justify-center">
-//         <h1 className="bg-white text-lg font-semibold m-[5px]">Seu Perfil</h1>
-//         <p className="bg-white"><b>Nome:</b> {userData.dados.name}</p>
-//         <p className="bg-white"><b>Nome de usuário:</b> {userData.dados.userName}</p>
-//         <p className="bg-white"><b>Email:</b> {userData.dados.email}</p>
-//         <div id="favoritos" className="bg-white mt-2">
-//           <h2 className="text-g font-semibold mb-2">Seus favoritos</h2>
-//           <ul>
-//           {
-//             primeirosfavoritos.map((item: Favorito) => {
-//               return <li key={item.id} className="bg-white"><a href={`/local/${item.id_lugar}`}>{item.name}</a></li>
-//             })
-//           }
-//           {favoritos.length <= 0 && (
-//             <p>Você não favoritou nenhum lugar</p> // Redireciona para uma página com todos os favoritos
-//           )}
-//           </ul>
-//           {favoritos.length > 5 && (
-//             <a href="/favoritos">Ver mais+</a>
-//           )}
-//         </div>
-//         <div id="amigos" className="bg-white mt-2">
-//           <h2 className="text-g font-semibold mb-2"><a href="/amigos">Seus amigos</a></h2>
-//           <ul>
-//           {
-//             primeirosamigos.map((item: Amigo) => {
-//               return <li key={item.id} className="bg-white"><a href={`/${item.username}`}>{item.name ? item.name : item.username}</a></li>
-//             })
-//           }
-//           {amigos.length <= 0 && (
-//             <p>Você não tem nenhum amigo aqui</p>
-//           )}
-//           </ul>
-//           {amigos.length > 5 && (
-//             <a href="/amigos">Ver mais+</a> // Redireciona para uma página com todos os amigos
-//           )}
-//         </div>
-//         <a className="bg-white mt-[5px]" href="/profile/edit" >editar perfil</a>
-//         <a className="bg-white mt-[5px]" onClick={logout} >sair</a> FAZER ISSO AQUI
-//         <a className="bg-white m-[5px]" href="/" >início</a>
-//       </div>
-//     </main>
-//   );
-// };
-
 return (
   <main className="indoali">
       <header className="p-4 flex items-center justify-between bg-[#F7F5FF] w-screen">
@@ -271,7 +219,7 @@ return (
           <p className="text-xs text-[#E98800]">Perfil criado em {userData.dados.datacriacao.split("-")[2].split("T")[0]}/{userData.dados.datacriacao.split("-")[1]}/{userData.dados.datacriacao.split("-")[0]}</p>
           <button className="mt-2 w-40 py-1 bg-[#7F6EF2] text-white rounded-md text-base" onClick={() => window.open("/profile/edit", "_self")}>Editar perfil</button>
       </div>
-      <img className="w-24 h-24 rounded-full" src={Foto} alt="Foto de perfil"/>
+      <img className="w-24 h-24 rounded-full" src={userData.dados.fotoperfil ? `http://localhost:3000/uploads/${userData.dados.fotoperfil}` : Foto} alt="Foto de perfil"/>
   </div>
     <div className="mt-4">
       <h3 className="text-[#7F6EF2]">Sobre seu perfil:</h3>
@@ -299,32 +247,12 @@ return (
         primeirosamigos.map((item: Amigo) => {
         return <div className="text-center" key={item.id}>
                 <a href={`/user/${item.username}`}>
-                <img className="w-12 h-12 rounded-full m-auto" src={Foto} alt="Amigo 1"/>
+                <img className="w-12 h-12 rounded-full m-auto" src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Foto} alt="Amigo 1"/>
                 <p className="max-h-8 text-ellipsis overflow-hidden text-xs text-[#7C7A87]">{item.name ? item.name : item.username}</p>
                 </a>
                </div>
         })
       }
-      {/* <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Amigo 2"/>
-        <p className="text-sm text-[#868686]">@cossito</p>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Amigo 2"/>
-        <p className="text-sm text-[#868686]">@iarao</p>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Amigo 3"/>
-        <p className="text-sm text-[#868686]">@luzia</p>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Amigo 4"/>
-        <p className="text-sm text-[#868686]">@kuabrs</p>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Amigo 5"/>
-        <p className="text-sm text-[#868686]">@loona</p>
-      </div> */}
     </div>
   </section>
   <section className="p-4 w-full">
@@ -348,34 +276,12 @@ return (
         primeirosfavoritos.map((item: Favorito) => {
         return <div className="text-center" key={item.id}>
                 <a href={`/local/${item.id_lugar}`}>
-                <img className="w-12 h-12 rounded-full m-auto" src={Local} alt={item.name}/>
+                <img className="w-12 h-12 rounded-full m-auto" src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                 <p className="max-h-8 text-xs text-[#7C7A87]">{item.name}</p>
                 </a>
                </div>
         })
       }
-      {/* <div className="text-center" key={item.id}>
-        <a href={`/local/${item.id_lugar}`}>
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt={item.name}/>
-        <p className="text-sm text-[#868686]">{item.name}</p>
-        </a>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Favorito 2"/>
-        <p className="text-sm text-[#868686]">Bodega do..</p>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Favorito 3"/>
-        <p className="text-sm text-[#868686]">Honorato Sushi</p>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Favorito 4"/>
-        <p className="text-sm text-[#868686]">Parque das..</p>
-      </div>
-      <div className="text-center">
-        <img className="w-12 h-12 rounded-full" src="../assets/image (1).png" alt="Favorito 5"/>
-        <p className="text-sm text-[#868686]">Loop</p>
-      </div> */}
     </div>
   </section>
   <section className="p-4 w-full">

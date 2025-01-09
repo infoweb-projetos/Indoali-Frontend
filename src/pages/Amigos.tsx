@@ -17,6 +17,7 @@ type Amigo = {
   name: string;
   username: string;
   descricao: string;
+  fotoperfil?: string;
 };
 
 type Solicitacao = {
@@ -26,6 +27,7 @@ type Solicitacao = {
   username: string;
   enviado: boolean;
   descricao: string;
+  fotoperfil?: string;
 }
 
 const Amigos: React.FC = () => {
@@ -99,13 +101,14 @@ const Amigos: React.FC = () => {
               }
             });
             const amigo = userResposta.data;
-            //console.log(amigo.dados.name)
+            //console.log(userResposta.data)
             return {
               id: item.id,
               id_amigo: item.id_emissor,
               name: amigo.dados.name,
               username: amigo.dados.userName,
-              descricao: amigo.dados.descricao
+              descricao: amigo.dados.descricao,
+              fotoperfil: amigo.dados.fotoperfil
             };
             } else {
               const userResposta = await axios.get("http://localhost:3000/usuarios/"+item.id_receptor, {
@@ -120,7 +123,8 @@ const Amigos: React.FC = () => {
                 id_amigo: item.id_receptor,
                 name: amigo.dados.name,
                 username: amigo.dados.userName,
-                descricao: amigo.dados.descricao
+                descricao: amigo.dados.descricao,
+                fotoperfil: amigo.dados.fotoperfil
               };
             }
           })
@@ -163,7 +167,8 @@ const Amigos: React.FC = () => {
                 name: solicitacao.dados.name,
                 username: solicitacao.dados.userName,
                 enviado: false,
-                descricao: solicitacao.dados.descricao
+                descricao: solicitacao.dados.descricao,
+                fotoperfil: solicitacao.dados.fotoperfil
               };
               } else {
                 const userResposta = await axios.get("http://localhost:3000/usuarios/"+item.id_receptor, {
@@ -178,7 +183,8 @@ const Amigos: React.FC = () => {
                   name: solicitacao.dados.name,
                   username: solicitacao.dados.userName,
                   enviado: true,
-                  descricao: solicitacao.dados.descricao
+                  descricao: solicitacao.dados.descricao,
+                  fotoperfil: solicitacao.dados.fotoperfil
                 };
               }
             })
@@ -238,7 +244,8 @@ const Amigos: React.FC = () => {
           name: usuario.name,
           username: usuario.userName,
           enviado: true,
-          descricao: usuario.descricao
+          descricao: usuario.descricao,
+          fotoperfil: usuario.fotoperfil
         },
       ]);
       console.log(usuario)
@@ -289,7 +296,8 @@ const Amigos: React.FC = () => {
             id_amigo: sol.id_usuario,
             name: sol.name,
             username: sol.username,
-            descricao: sol.descricao
+            descricao: sol.descricao,
+            fotoperfil: sol.fotoperfil
           };
           amigos.push(am)
         }
@@ -347,7 +355,7 @@ const Amigos: React.FC = () => {
             amigos.map((item: Amigo) => {
             return <div  key={item.id} className="flex items-center justify-between bg-[#F7F5FF] p-4 rounded-lg border border-[#E8E5F8] hover:border-[#BFB6F8] hover:bg-[#E8E5F8]">
             <div className="flex items-center space-x-4">
-              <img src={Foto} alt={item.username} className="w-12 h-12 rounded-full"/>
+              <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Foto} alt={item.username} className="w-12 h-12 rounded-full"/>
               <div>
                 <h3 className="text-sm font-semibold text-[#E98800]">{item.name ? item.name : item.username}</h3>
                 <p className="text-xs text-[#7C7A87]">@{item.username}</p>
@@ -373,7 +381,7 @@ const Amigos: React.FC = () => {
             recebidas.map((item: Solicitacao) => {
             return <div key={item.id} className="flex items-center justify-between bg-[#F7F5FF] p-4 rounded-lg border border-[#E8E5F8] hover:border-[#BFB6F8] hover:bg-[#E8E5F8]">
             <div className="flex items-center space-x-4">
-              <img src={Foto} alt={item.username} className="w-12 h-12 rounded-full"/>
+              <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Foto} alt={item.username} className="w-12 h-12 rounded-full"/>
               <div>
                 <h3 className="text-sm font-semibold text-[#E98800]">{item.name ? item.name : item.username}</h3>
                 <p className="text-xs text-[#7C7A87]">@{item.username}</p>
@@ -399,7 +407,7 @@ const Amigos: React.FC = () => {
             enviadas.map((item: Solicitacao) => {
             return <div key={item.id} className="flex items-center justify-between bg-[#F7F5FF] p-4 rounded-lg border border-[#E8E5F8] hover:border-[#BFB6F8] hover:bg-[#E8E5F8]">
             <div className="flex items-center space-x-4">
-              <img src={Foto} alt={item.username} className="w-12 h-12 rounded-full"/>
+              <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Foto} alt={item.username} className="w-12 h-12 rounded-full"/>
               <div>
                 <h3 className="text-sm font-semibold text-[#E98800]">{item.name ? item.name : item.username}</h3>
                 <p className="text-xs text-[#7C7A87]">@{item.username}</p>
@@ -418,64 +426,6 @@ const Amigos: React.FC = () => {
             </div>
           )}
         </div>
-          {/* <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
-            <div className="flex items-center space-x-4">
-              <img src="img/roge.png" alt="Iara Monyke" className="w-12 h-12 rounded-full"/>
-              <div>
-                <h3 className="text-sm font-semibold text-[#FF9500]">Iara Monyke</h3>
-                <p className="text-xs text-[#A7A7A7]">@Luv.areila</p>
-                <button className="text-sm text-white bg-[#7F6EF2] py-0,8 px-5 rounded-lg">Ver perfil</button>
-              </div>
-            </div>
-            <button>
-              <img src="img/Vector.png" alt="info" className="w-6 h-6"/>
-            </button>
-          </div>
-
-        <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
-            <div className="flex items-center space-x-4">
-              <img src="img/roge.png" alt="Wesley" className="w-12 h-12 rounded-full"/>
-              <div>
-                <h3 className="text-sm font-semibold text-[#FF9500]">Wesley</h3>
-                <p className="text-xs text-[#A7A7A7]">@poligontunes</p>
-                <button className="text-sm text-white bg-[#7F6EF2] py-0,8 px-5 rounded-lg">Ver perfil</button>
-              </div>
-            </div>
-            <button>
-              <img src="img/Vector.png" alt="info" className="w-6 h-6"/>
-            </button>
-          </div>
-        
-
-        <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
-            <div className="flex items-center space-x-4">
-              <img src="img/roge.png" alt="Josilmar" className="w-12 h-12 rounded-full"/>
-              <div>
-                <h3 className="text-sm font-semibold text-[#FF9500]">Josilmar</h3>
-                <p className="text-xs text-[#A7A7A7]">@rogeroge</p>
-                <button className="text-sm text-white bg-[#7F6EF2] py-0,8 px-5 rounded-lg">Ver perfil</button>
-              </div>
-            </div>
-            <button>
-              <img src="img/Vector.png" alt="info" className="w-6 h-6"/>
-            </button>
-          </div>
-        
-
-        <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md">
-            <div className="flex items-center space-x-4">
-              <img src="img/roge.png" alt="Iraikare" className="w-12 h-12 rounded-full"/>
-              <div>
-                <h3 className="text-sm font-semibold text-[#FF9500]">Iraikare</h3>
-                <p className="text-xs text-[#A7A7A7]">@iaraoreidelas</p>
-                <button className="text-sm text-white bg-[#7F6EF2] py-0,8 px-5 rounded-lg">Ver perfil</button>
-              </div>
-            </div>
-            <button>
-              <img src="img/Vector.png" alt="info" className="w-6 h-6"/>
-            </button>
-          </div> */}
-        
       </main>
     </div>
     <button className="bg-[#F7F5FF] rounded-lg p-4 fixed shadow-md bottom-20 right-4"><img src={Mais} onClick={() => {setAdd(true)}}/></button>

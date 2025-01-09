@@ -208,7 +208,7 @@ return (
                 </div>
               )}
         </div>
-        <img className="w-24 h-24 rounded-full" src={Foto} alt="Foto de perfil"/>
+        <img className="w-24 h-24 rounded-full" src={userData.dados.fotoperfil ? `http://localhost:3000/uploads/${userData.dados.fotoperfil}` : Foto} alt="Foto de perfil"/>
     </div>
         <div className="mt-4">
         <h3 className="text-[#7F6EF2]">Sobre esse perfil:</h3>

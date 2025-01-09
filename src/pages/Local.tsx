@@ -93,11 +93,11 @@ const Local: React.FC = () => {
 
   return (
     <main className="indoali">
-        <section style={{backgroundImage: `url(${PadraoImg})`}} className="p-4 h-48 w-full flex flex-col justify-between shadow-md bg-cover">
-    <a className="bg-white w-8 h-8 rounded-full drop-shadow content-center items-center" onClick={() => navigate(-1)} >
-      <img  className="mx-auto" width="16px" src={VoltarIcon} alt="Voltar" />
-    </a>
-    <div className="flex justify-between items-center">
+      <section style={{backgroundImage: `url(${local.dados.fotoperfil ? `http://localhost:3000/uploads/${local.dados.fotoperfil}` : Local})`}} className="p-4 h-48 w-full flex flex-col justify-between shadow-md bg-cover">
+      <a className="bg-white w-8 h-8 rounded-full drop-shadow content-center items-center" onClick={() => navigate(-1)} >
+        <img  className="mx-auto" width="16px" src={VoltarIcon} alt="Voltar" />
+      </a>
+      <div className="flex justify-between items-center">
       <h2 className="text-2xl font-semibold text-white drop-shadow">{local.dados.name}</h2>
       <button onClick={handleFavoritar} className="bg-white w-10 h-10 rounded-full drop-shadow content-center items-center">
         <img className="mx-auto" width="22px" src={isFavoritado ? FavoritoIcon : NaoFavoritoIcon} />

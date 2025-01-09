@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TextareaAutosize } from '@mui/material';
 import Voltar from '../assets/voltar.svg';
+import FotoGenerica from '../assets/profileimage.jpeg';
 
 const EditProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const EditProfile: React.FC = () => {
   const [userName, setUserName] = useState('');
   const [name, setName] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [fotoLocal, setFotoLocal] = useState('');
+  const [foto, setFoto] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -35,6 +38,7 @@ const EditProfile: React.FC = () => {
         setName(response.data.dados.name);
         setUserName(response.data.dados.userName);
         setDescricao(response.data.dados.descricao);
+        setFotoLocal(response.data.dados.fotoperfil);
 
         setUserData(response.data);
 
@@ -79,6 +83,16 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
           Authorization: `Bearer ${token}`,
         },
       });
+      const formData = new FormData();
+      if (foto) {
+        formData.append('foto', foto); // Nome do campo deve ser 'foto'
+      }
+      await axios.post(`http://localhost:3000/usuarios/uploadfoto/${id}`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       navigate('/profile');
     } catch (error: any) {
       if (error.response && error.response.data.message) {
@@ -119,6 +133,26 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFoto(file);
+
+      // File preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        const previewElement = document.getElementById("file-preview") as HTMLImageElement;
+        if (previewElement) previewElement.src = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFileRemove = () => {
+    setFoto(null)
+    setFotoLocal("")
+  };
+
   return (
     <main className="indoali h-screen justify-start">
       { sair ? <>
@@ -140,7 +174,34 @@ const handleUpdateProfile = async (e: React.FormEvent) => {
         <h1 className="text-lg pl-4 pr-4 text-[#2F2959] font-bold">Editar Perfil</h1>
         <div className="w-5"></div>
       </header>
-      <div className="flex flex-col items-center p-4 w-full h-full justify-center">
+      <div className="flex flex-col items-center p-4 w-full justify-center">
+        <div>
+          { foto ? 
+          <>
+            <label  className='remove flex h-32 w-32' htmlFor="removefoto">
+              <img id="file-preview" className='object-cover rounded-full w-32 h-32'/>
+              <div className='flex flex-col justify-center absolute h-32 w-32 bg-black bg-opacity-50 rounded-full'><p className="text-lg text-white text-center">Remover foto</p></div>
+            </label>
+          </> : 
+          <>
+            {fotoLocal ?
+              <>
+                <label  className='remove flex h-32 w-32' htmlFor="removefoto">
+                  <img id="file-preview" src={`http://localhost:3000/uploads/${fotoLocal}`} className='bg-blend-darken object-cover rounded-full w-32 h-32'/>
+                  <div className='flex flex-col justify-center absolute h-32 w-32 bg-black bg-opacity-50 rounded-full'><p className="text-lg text-white text-center">Remover foto</p></div>
+                </label>
+              </> :
+              <>
+                <label  className='adiciona flex h-32 w-32' htmlFor="addfoto">
+                  <img src={FotoGenerica} className='object-cover rounded-full w-32 h-32'/> 
+                  <div className='flex flex-col justify-center absolute h-32 w-32 bg-black bg-opacity-50 rounded-full'><p className="text-lg text-white text-center">Adicionar foto</p></div>
+                </label>
+              </>
+            }
+          </> } 
+          <input type="button" id="removefoto" className="hidden" onClick={handleFileRemove}/>
+          <input type="file" id="addfoto" className="hidden" accept="image/*" onChange={handleFileChange}/>
+        </div>
         <form onSubmit={handleUpdateProfile}>
             <div className="info" style={{ marginBottom: '20px' }}>
                 <label className="text-[#2F2959]" htmlFor="nome"><b>Nome:</b></label>
