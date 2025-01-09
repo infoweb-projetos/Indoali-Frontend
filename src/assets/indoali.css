@@ -104,6 +104,10 @@
         display: none;
       }
 
+    .pb-rs {
+        padding-bottom: 0.146484rem;
+      }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -7,7 +7,7 @@ import Planner from '../assets/plannericon.svg';
 import Perfil from '../assets/perfilicon.svg';
 import Star from '../assets/star.svg'
 import Local from '../assets/localimage.jpg'
-import Promocao from '../assets/imagens/imagempadrao.jpg'
+// import Promocao from '../assets/imagens/imagempadrao.jpg'
 import Notif from '../assets/notif.svg';
 import Lupa from '../assets/lupa.svg';
 // import Css from '../assets/carousel.css'
@@ -21,9 +21,15 @@ type Lugar = {
     fotoperfil?: string;
   };
 
+type Promo = {
+  id: number;
+  promocao: string;
+}
+
 const Feed: React.FC = () => {
     const [lugares, setLugares] = useState([]);
     const [userData, setUserData] = useState<any>();
+    const [promocoes, setPromocoes] = useState([]);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -79,8 +85,26 @@ const Feed: React.FC = () => {
           }
         };
 
+        const fetchPromos = async () => {
+          try {
+            axios.get("http://localhost:3000/lugares/promo/coes").then((resposta: AxiosResponse) => {
+              console.log(resposta)
+              const dados = resposta.data.lugares.slice(0, 5).map((item: { id: number; promocao: string; }) => {
+                return {
+                  id: item.id,
+                  promocao: item.promocao
+                };
+              });
+              setPromocoes(dados);
+            });
+          } catch (error) {
+              console.error('Erro ao buscar os locais:', error);
+          }
+        }
+
         fetchLocais(); 
         fetchUserProfile();
+        fetchPromos();
 
         const script = document.createElement('script');
 
@@ -117,6 +141,15 @@ const Feed: React.FC = () => {
       }
     }
 
+    // temporário, só pra aparecer no feed embaralhado
+    const shuffle = (array: any[]) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array
+    };
+
     return (
       <>
       <link href="/src/assets/carousel.css" rel="stylesheet" type="text/css"/>
@@ -127,17 +160,23 @@ const Feed: React.FC = () => {
           </figure>
         </div>
         <IrAoPerfil/>
-        <div id = "notif">
+        <div id = "notif" className="flex pl-2">
           <button>
             <img src={Notif} alt = "Notificações"/>
           </button>
         </div>
       </header>
       <main className="p-4">
+        {promocoes ?
         <section>
           <div className="carousel-container relative overflow-hidden rounded-lg shadow-lg max-w-md">
             <div className="carousel-track">
-              <div className="carousel-slide min-w-full">
+              {shuffle(promocoes).map((item: Promo) => {
+                return <div className="carousel-slide min-w-full">
+                        <img src={`http://localhost:3000/uploads/${item.promocao}`} alt="Promoção" className="h-48 w-full rounded-lg object-cover" onClick={() => window.open(`/local/${item.id}`, "_self")}/>
+                       </div>
+              })}
+              {/* <div className="carousel-slide min-w-full">
                 <img src={Promocao} alt="Semana do Cinema - Slide 1" className="w-full rounded-lg"/>
               </div>
               <div className="carousel-slide min-w-full">
@@ -145,16 +184,20 @@ const Feed: React.FC = () => {
               </div>
               <div className="carousel-slide min-w-full">
                 <img src={Promocao} alt="Semana do Cinema - Slide 3" className="w-full rounded-lg"/>
-              </div>
+              </div> */}
             </div>
 
             <div className="carousel-indicators absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
-              <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="0"></span>
+              {promocoes.map((index) => {
+                return <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide={index}></span>
+              })}
+              {/* <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="0"></span>
               <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="1"></span>
-              <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="2"></span>
+              <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="2"></span> */}
             </div>
           </div>
-        </section>
+        </section> : null
+        }
                 
         <div className="flex items-center bg-[#E8E5F8] p-2 rounded-lg shadow-sm mt-6">
           <input type="text" placeholder="Procurar por novos rolês..." className="w-full bg-[#E8E5F8] text-sm outline-none px-2 text-[#7C7A87] placeholder-[#7C7A87]"/>
@@ -171,12 +214,12 @@ const Feed: React.FC = () => {
             </div>
             <div className="carousel" id="carousel-em-alta">
             {localStorage.getItem('token') ?
-              lugares.map((item: Lugar) => {
+              shuffle(lugares).map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
                         <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
-              }) : null
+              }).slice(0, 5) : null
             }
             </div>
             </div>
@@ -189,12 +232,12 @@ const Feed: React.FC = () => {
             </div>
             <div className="carousel" id="carousel-replay">
             {localStorage.getItem('token') ?
-              lugares.map((item: Lugar) => {
+              shuffle(lugares).map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
                         <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
-              }) : null
+              }).slice(0, 5) : null
             }
             </div>
             </div>
@@ -207,12 +250,12 @@ const Feed: React.FC = () => {
           </div>
           <div className="carousel" id="carousel-replay">
           {localStorage.getItem('token') ?
-              lugares.map((item: Lugar) => {
+              shuffle(lugares).map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
                         <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
-              }) : null
+              }).slice(0, 5) : null
             }
           </div>
           </div>
@@ -225,12 +268,12 @@ const Feed: React.FC = () => {
           </div>
           <div className="carousel" id="carousel-replay">
           {localStorage.getItem('token') ?
-              lugares.map((item: Lugar) => {
+              shuffle(lugares).map((item: Lugar) => {
                 return <div className="carousel-item text-[#2F2959]" key={item.id} onClick={() => window.open(`/local/${item.id}`, "_self")} >
                         <img src={item.fotoperfil ? `http://localhost:3000/uploads/${item.fotoperfil}` : Local} alt={item.name}/>
                         <p className="max-h-10 text-ellipsis overflow-hidden text-sm" >{item.name}</p>
                       </div>
-              }) : null
+              }).slice(0, 5) : null
             }
           </div>
           </div>

@@ -540,8 +540,8 @@ const Amigos: React.FC = () => {
         </div>
       </> 
       )}
-      </>
-      })
+    </>
+    })
     }
     </main>
   );
