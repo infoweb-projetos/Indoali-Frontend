@@ -88,7 +88,7 @@ const Feed: React.FC = () => {
         const fetchPromos = async () => {
           try {
             axios.get("http://localhost:3000/lugares/promo/coes").then((resposta: AxiosResponse) => {
-              console.log(resposta)
+              //console.log(resposta)
               const dados = resposta.data.lugares.slice(0, 5).map((item: { id: number; promocao: string; }) => {
                 return {
                   id: item.id,
@@ -171,8 +171,8 @@ const Feed: React.FC = () => {
         <section>
           <div className="carousel-container relative overflow-hidden rounded-lg shadow-lg max-w-md">
             <div className="carousel-track">
-              {shuffle(promocoes).map((item: Promo) => {
-                return <div className="carousel-slide min-w-full">
+              {shuffle(promocoes).map((item: Promo, index) => {
+                return <div key={`keypromo2${index}`} className="carousel-slide min-w-full">
                         <img src={`http://localhost:3000/uploads/${item.promocao}`} alt="Promoção" className="h-48 w-full rounded-lg object-cover" onClick={() => window.open(`/local/${item.id}`, "_self")}/>
                        </div>
               })}
@@ -189,7 +189,7 @@ const Feed: React.FC = () => {
 
             <div className="carousel-indicators absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
               {promocoes.map((index) => {
-                return <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide={index}></span>
+                return <span key={`keypromo${index}`} className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide={index}></span>
               })}
               {/* <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="0"></span>
               <span className="carousel-indicator w-2.5 h-2.5 bg-white bg-opacity-50 rounded-full cursor-pointer transition-all duration-300" data-slide="1"></span>
@@ -291,7 +291,7 @@ const Feed: React.FC = () => {
               <img src={Busca} alt="Busca"/>
               <span className="text-sm">Busca</span>
             </button>
-            <button className="flex flex-col items-center text-[#7F6EF2]">
+            <button className="flex flex-col items-center text-[#7F6EF2]" onClick={() => window.open("/planner", "_self")}>
               <img src={Planner} alt="Planner"/>
               <span className="text-sm">Planner</span>
             </button>

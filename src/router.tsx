@@ -16,6 +16,7 @@ const Local = lazy(() => import('./pages/Local'));
 const EditProfile = lazy(() => import('./pages/EditProfile'));
 const OutroUsuario = lazy(() => import('./pages/OutroUsuario'));
 const Amigos = lazy(() => import('./pages/Amigos'));
+const Planner = lazy(() => import('./pages/Planner'));
 
 const AppRouter: React.FC = () => {
   return (
@@ -31,6 +32,7 @@ const AppRouter: React.FC = () => {
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/user/:userName" element={<OutroUsuario />} />
           <Route path="/amigos" element={<Amigos />} />
+          <Route path="/planner" element={<Planner />} />
         </Routes>
       </Suspense>
     </Router>

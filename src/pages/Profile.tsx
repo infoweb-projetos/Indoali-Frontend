@@ -304,7 +304,7 @@ return (
           <img src={Busca} alt="Busca"/>
           <span className="text-sm">Busca</span>
         </button>
-        <button className="flex flex-col items-center text-[#7F6EF2]">
+        <button className="flex flex-col items-center text-[#7F6EF2]" onClick={() => window.open("/planner", "_self")}>
           <img src={Planner} alt="Planner"/>
           <span className="text-sm">Planner</span>
         </button>

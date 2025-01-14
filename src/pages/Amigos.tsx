@@ -70,7 +70,7 @@ const Amigos: React.FC = () => {
           
           navigate('/login');
         } else {
-          console.error('Erro ao buscar perfil do usuário:', error);
+          console.error('Erro ao buscar amigos do usuário:', error);
         }
       }
     };
@@ -371,9 +371,12 @@ const Amigos: React.FC = () => {
           {amigos.length <= 0 && (
             <div className='flex flex-col text-[#2F2959]'>
               <p className='text-center'>Você não tem nenhum amigo aqui</p>
+              <a className='text-center m-auto' onClick={() => {setAdd(true)}}>+ Encontre seus amigos</a>
             </div>
           )}
         </div>
+        {recebidas && recebidas.length > 0?
+        <>
         <h2 className="text-base pl-4 pr-4 text-[#2F2959] font-bold text-center">Solicitações recebidas</h2>
         <hr className="border border-[#9593A4]" />
         <div className="space-y-4">
@@ -394,12 +397,9 @@ const Amigos: React.FC = () => {
           </div>
             })
           }
-          {recebidas.length <= 0 && (
-            <div className='flex flex-col text-[#2F2959]'>
-              <p className='text-center'>Você não tem nenhuma solicitação de amizade</p>
-            </div>
-          )}
-        </div>
+        </div> 
+        </> : null }
+
         <h2 className="text-base pl-4 pr-4 text-[#2F2959] font-bold text-center">Solicitações enviadas</h2>
         <hr className="border border-[#9593A4]" />
         <div className="space-y-4">
@@ -423,6 +423,10 @@ const Amigos: React.FC = () => {
           {enviadas.length <= 0 && (
             <div className='flex flex-col text-[#2F2959]'>
               <p className='text-center'>Você não enviou nenhuma nova solicitação</p>
+              {amigos && amigos.length > 0?
+              <a className='text-center m-auto' onClick={() => {setAdd(true)}}>+ Encontre mais amigos</a> :
+              <a className='text-center m-auto' onClick={() => {setAdd(true)}}>+ Encontre seus amigos</a>
+              }
             </div>
           )}
         </div>
@@ -441,7 +445,7 @@ const Amigos: React.FC = () => {
             <img src={Busca} alt="Busca"/>
             <span className="text-sm">Busca</span>
           </button>
-          <button className="flex flex-col items-center text-[#7F6EF2]">
+          <button className="flex flex-col items-center text-[#7F6EF2]" onClick={() => window.open("/planner", "_self")}>
             <img src={Planner} alt="Planner"/>
             <span className="text-sm">Planner</span>
           </button>
