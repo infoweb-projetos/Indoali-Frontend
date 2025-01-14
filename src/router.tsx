@@ -17,6 +17,7 @@ const EditProfile = lazy(() => import('./pages/EditProfile'));
 const OutroUsuario = lazy(() => import('./pages/OutroUsuario'));
 const Amigos = lazy(() => import('./pages/Amigos'));
 const Planner = lazy(() => import('./pages/Planner'));
+const Role = lazy(() => import('./pages/Role'));
 
 const AppRouter: React.FC = () => {
   return (
@@ -33,6 +34,7 @@ const AppRouter: React.FC = () => {
           <Route path="/user/:userName" element={<OutroUsuario />} />
           <Route path="/amigos" element={<Amigos />} />
           <Route path="/planner" element={<Planner />} />
+          <Route path="/role/:id" element={<Role />} />
         </Routes>
       </Suspense>
     </Router>

@@ -175,9 +175,14 @@ return (
             <p className="text-base text-[#7C7A87]">@{userData.dados.userName}</p>
             <p className="text-xs text-[#E98800]">Perfil criado em {userData.dados.datacriacao.split("-")[2].split("T")[0]}/{userData.dados.datacriacao.split("-")[1]}/{userData.dados.datacriacao.split("-")[0]}</p>
             {relationshipStatus === 'amigo' && (
+              userData.dados.id != localStorage.getItem('userId') ?
                 <button className="mt-2 w-40 py-1 bg-transparent border border-[#7F6EF2] text-[#7F6EF2] rounded-md text-base"
                   onClick={apagarAmizade}>
                   Remover Amizade
+                </button> : 
+                <button className="mt-2 w-40 py-1 bg-[#7F6EF2] text-white rounded-md text-base"
+                  onClick={() => window.open("/profile", "_self")}>
+                  Seu Perfil
                 </button>
               )}
               
